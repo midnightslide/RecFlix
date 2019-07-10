@@ -1,4 +1,4 @@
-"RecFlix"
+<center> <h1>"RecFlix"</h1> </center>
 
 ![Image of RecFlix](https://i.imgur.com/UgAF0em.jpg)
 
