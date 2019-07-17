@@ -11,7 +11,6 @@ Keras-Applications==1.0.7
 Keras-Preprocessing==1.0.9
 Markdown==3.1
 matplotlib==2.2.3
-nltk==3.4
 numpy==1.15.1
 numpydoc==0.8.0
 pandas==0.23.4
@@ -20,7 +19,6 @@ PyHamcrest==1.9.0
 pylint==2.1.1
 PyMySQL==0.9.3
 pyOpenSSL==18.0.0
-PySocks==1.6.8
 QtPy==1.5.0
 requests==2.20.0
 requests-futures==0.9.7
@@ -29,8 +27,6 @@ scikit-image==0.14.0
 scikit-learn==0.19.2
 scipy==1.1.0
 sklearn==0.0
-spyder==3.3.1
-spyder-kernels==0.2.6
 SQLAlchemy==1.2.16
 statsmodels==0.9.0
 sympy==1.2
@@ -40,7 +36,6 @@ tensorboard==1.13.1
 tensorflow==1.13.1
 tensorflow-estimator==1.13.0
 toolz==0.9.0
-Twisted==18.7.0
 urllib3==1.23
 us==1.0.0
 webencodings==0.5.1
