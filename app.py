@@ -25,7 +25,7 @@ def index():
     form = SearchForm(request.form)
     if request.method == 'POST':
         form_cont = form.autocomp.data.replace(" ", "%20")
-        return redirect('http://127.0.0.1:5000/rec/' + form_cont)
+        return redirect('http://gregrecflix.herokuapp.com/rec/' + form_cont)
     rando_df = movies.sample(8)
     title2 = []
     url = []
@@ -69,7 +69,7 @@ def movie_bot_final(title):
     # FORM SUBMISSION
     if request.method == 'POST':
         form_cont = form.autocomp.data.replace(" ", "%20")
-        return redirect('http://127.0.0.1:5000/rec/' + form_cont)
+        return redirect('http://gregrecflix.herokuapp.com/rec/' + form_cont)
     # ML BASED ON THE MOVIE GENRE
     titles = movies['title']
     indices = pd.Series(movies.index, index=movies['title'])
