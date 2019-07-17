@@ -21,7 +21,6 @@ pylint==2.1.1
 PyMySQL==0.9.3
 pyOpenSSL==18.0.0
 PySocks==1.6.8
-pywin32==223
 QtPy==1.5.0
 requests==2.20.0
 requests-futures==0.9.7
