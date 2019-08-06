@@ -1,5 +1,7 @@
 <center> <h1>"RecFlix"</h1> </center>
 
+Project URL: http://gregrecflix.herokuapp.com
+
 ![Image of RecFlix](https://i.imgur.com/UgAF0em.jpg)
 
 This project was based around a movie recommendation website idea. It uses a cosine similarity machine learning algorithm to suggest movies to users based on the genre of their selection. To keep the package lighter and minimize the information required to host the site, the flask app makes multiple calls to different tmdb api endpoints to get the box title images, movie poster images, trailer url, and movie descriptions (they weren't all available from one endpoint).
