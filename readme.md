@@ -16,7 +16,6 @@ The ‘RECFLIX’ project utilizes Python, Flask, HTML, CSS, and a small amount 
 Future plans include:
 
 <ul>
-<li>Deploying the website to heroku and setting up a PostgreSQL database with the information</li>
 <li>Modifying the autocomplete to accept fuzzy words and movie descriptions, and limiting the results to a maximum of 10</li>
 <li>Implementing a second recommendation algorithm that analyzes keywords in the description of the selected movie to come up with recommendations in different genres.</li>
 </ul>
