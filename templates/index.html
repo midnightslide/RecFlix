@@ -4,7 +4,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>RecFlix - A simple movie recommendation system</title>
+		<title>RecFlix - A movie recommendation system by Greg Leland</title>
+		<!-- SPICY CSS FORMATTING -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
 		<!-- INCLUDES FOR JQUERY SUGGESTION MAGIC -->
 		<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
@@ -13,113 +15,12 @@
 		<script src='https://cdn.rawgit.com/pguso/jquery-plugin-circliful/master/js/jquery.circliful.min.js'></script>
 		<!-- INCLUDE FOR BOOTSTRAP FORMATTING -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <!-- SOME CSS TO SPICE THINGS UP A BIT -->
-		<style type="text/css">
-			body { 
-				background: black !important;
-				color: #c0c0c0 !important;
-			} 
-
-			.border {
-    		box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.527), 0 10px 20px 0 rgba(0, 0, 0, 0.295);
-			}
-
-			.border:hover {
-    		box-shadow: 0 0 15px rgba(243, 9, 9, 0.986); 
-				
-			}
-
-			h4 {
-				color: #fff;
-			}
-
-			form {
-			  display: flex;
-			  align-items: center; /* Vertical alignment */
-			}
-
-			input[type=text] {
-				background-color: rgba(0, 0, 0, 0.5);
-				padding-left:20px;
-				height: 35px;
-				border-radius: 15px;
-			  border-width: 2px;
-				border-style: solid;
-				border-color: #ff0101;
-				color: #fff;
-				width: 100%;
-				display: block;
-			  margin: 15px auto;
-			  max-width: 500px;
-			  width: 100%;
-			}
-
-			input[type=submit] {
-				background-color: #ff0101;
-				border-radius: 15px;
-			  border-width: 2px;
-				border-style: solid;
-				border-color: #ff0101;
-				color: #fff;
-				width: auto;
-				height: auto;
-				margin-left: 10px;
-			}
-			.autocomplete {
-			  position: relative;
-			  display: inline-block;
-			}
-
-			*:focus {
-			    outline: none;
-			}
-
-			.button-styled{
-							background-color: #ff0101;
-							border-radius: 15px;
-			  			border-width: 2px;
-							border-style: solid;
-							border-color: #ff0101;
-							color: #fff;
-							height: 30px;
-							width: 150px;
-							margin: 10px auto;
-						}
-
-			.ui-menu-item{
-				padding: 10px 0 0 10px;
-  			cursor: pointer;
-  			background-color:  rgba(23, 23, 24, 0.87); 
-				border-bottom: 1px solid rgba(231, 5, 5, 0.719); 
-				color: #fff;
-			}
-
-			.ui-menu-item:hover {
-  		/*when hovering an item:*/
-  			background-color: #222; 
-			}
-			.ui-widget-content {
-				background: transparent !important;
-				border: none !important;
-			}
-		
-			.item {
-				transition: transform .1s;
-  			width: 220px;
-  			height: 300px;
-  			margin: 0 auto;
-				position: relative;
-				
-			}
-
-			.item:hover {
-  		-moz-transform: scale(1.1);
-  		-webkit-transform: scale(1.1);
-  		transform: scale(1.1);
-			
-			}
-	  </style>
-	</head>
+		<!-- LIGHTBOX INCLUDES -->
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/lity.css') }}">
+		<script src="{{url_for('static', filename='js/lity.js')}}"></script>
+		 <!-- INCLUDE BOOTSTRAP WIZARDRY -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  </head>
   <body>
 		<div class="container-fluid">
 			<div class="row">
@@ -177,12 +78,14 @@ Looking for a movie to watch, but can't think of one? No problem. Pick a movie y
 								} 
 							</script>	
 						</div>		
+						<div class="row bottomButton" style="padding: 25px 0 0 0;">
+								<a href="https://github.com/GregLeland/">A Data Science and Machine Learning project created by Greg Leland for educational purposes.</a>
+							</div>
 					</div>
 				</div>
 			</div>
 		</div>
 <!-- MORE INCLUDES -->   
   <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
-  <script src="{{ url_for('static',filename='js/scripts.js') }}"></script>
   </body>
 </html>
