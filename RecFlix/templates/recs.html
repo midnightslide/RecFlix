@@ -68,7 +68,7 @@
 					</div>
 				</div>
 				<div class="jumbotron" style="text-align: center; background: #010101; padding-top: 10px !important;">
-					<div class="row"><h4 style="margin: 0;">Based on your search of {{ title }}, here are some movies that you might find interesting:</h3></div>
+					<div class="row"><h4 style="margin: 0;">Based on your selection of {{ title }}, here are some movies that you might find interesting:</h3></div>
 					<div class="row col-centered" style="text-align: center; margin-left: 10px;">
 						<!-- MOVIE SUGGESTIONS -->
 						<div class='col-md-2'><div class="item"><a href='{{moviename[0]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[0]}}'></a></div></div>                    
@@ -85,12 +85,15 @@
 						<div class='col-md-2'><div class="item"><a href='{{moviename[11]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[11]}}'></a></div></div>			
 					</div>
 					<a href="../"><button class="button-styled" >Go Back</button></a>
+					<div class="row bottomButton" style="padding: 25px 0 0 0;">
+							<a href="https://github.com/GregLeland/">A Data Science and Machine Learning project created by Greg Leland for educational purposes.</a>
+						</div>
 				</div>
+				
 			</div>		
 		</div>
 	</div>
 	<!-- MORE INCLUDES... FOR THINGS... AND STUFF... -->
 	<script src="{{ url_for('static',filename='js/bootstrap.min.js') }}"></script>
-	<script src="{{ url_for('static',filename='js/scripts.js') }}"></script>
   </body>
 </html>

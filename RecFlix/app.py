@@ -3,6 +3,7 @@ import json
 from flask_wtf import Form
 from wtforms import TextField, BooleanField, PasswordField, TextAreaField, SubmitField, validators
 from engine import *
+from fuzzywuzzy import process
 import requests
 from api_key import api_key
 
@@ -24,8 +25,16 @@ movie_list = movies['title'].tolist()
 def index():
     form = SearchForm(request.form)
     if request.method == 'POST':
-        form_cont = form.autocomp.data.replace(" ", "%20")
-        return redirect('http://127.0.0.1:5000/rec/' + form_cont)
+        form_cont = form.autocomp.data
+        str2Match = form_cont
+        strOptions = movie_list
+        # You can also select the string with the highest matching percentage
+        highest = process.extractOne(str2Match,strOptions)
+        fuzzyresult = highest[0]
+        if form_cont == fuzzyresult:
+            return redirect('../rec/' + fuzzyresult)
+        else:
+            return redirect('../results/' + form_cont)
     rando_df = movies.sample(8)
     title2 = []
     url = []
@@ -43,6 +52,43 @@ def index():
         else:
             pass
     return render_template('index.html', title2=title2, url=url, form=form)
+
+@app.route("/results/<title>", methods=['GET', 'POST'])
+def searchResults(title):
+    form = SearchForm(request.form)
+    if request.method == 'POST':
+        form_cont = form.autocomp.data
+        str2Match = form_cont
+        strOptions = movie_list
+        Ratios = process.extract(str2Match,strOptions)
+        # You can also select the string with the highest matching percentage
+        highest = process.extractOne(str2Match,strOptions)
+        fuzzyresult = highest[0]
+        if form_cont == fuzzyresult:
+            return redirect('../rec/' + fuzzyresult)
+        else:
+            return redirect('../results/' + form_cont)
+    resultString = title
+    resultOptions = movie_list
+    Ratios = process.extract(resultString,resultOptions)
+    resultList = []
+    for x in range(len(Ratios)):
+        resultList.append(Ratios[x][0])
+    resultPosters = []
+    resultDescription = []
+    for x in resultList:
+        # IDENTIFY THE TITLE THAT WAS PASSED IN
+        titleloc = movies.loc[movies['title'] == x]
+        # GET THE DESCRIPTION OF THE MOVIE THAT WAS PASSED IN
+        desc_index = titleloc['tmdbId'].iloc[0]
+        resultPosters.append("https://image.tmdb.org/t/p/original/" + titleloc['poster_path'].iloc[0])
+        tmdb_desc = requests.get(f'https://api.themoviedb.org/3/movie/{desc_index}?api_key={api_key}')
+        desc_data = tmdb_desc.json()
+        if desc_data.get("overview") != None:
+            resultDescription.append(desc_data['overview'])
+        else:
+            pass   
+    return render_template('results.html', title=title, resultString=resultString, resultList=resultList, resultPosters=resultPosters, resultDescription=resultDescription, form=form)
 
 
 @app.route("/rec/<title>", methods=['GET', 'POST'])
@@ -68,8 +114,17 @@ def movie_bot_final(title):
         pass
     # FORM SUBMISSION
     if request.method == 'POST':
-        form_cont = form.autocomp.data.replace(" ", "%20")
-        return redirect('http://127.0.0.1:5000/rec/' + form_cont)
+        form_cont = form.autocomp.data
+        str2Match = form_cont
+        strOptions = movie_list
+        Ratios = process.extract(str2Match,strOptions)
+        # You can also select the string with the highest matching percentage
+        highest = process.extractOne(str2Match,strOptions)
+        fuzzyresult = highest[0]
+        if form_cont == fuzzyresult:
+            return redirect('../rec/' + fuzzyresult)
+        else:
+            return redirect('../results/' + form_cont)
     # ML BASED ON THE MOVIE GENRE
     titles = movies['title']
     indices = pd.Series(movies.index, index=movies['title'])
