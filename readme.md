@@ -7,7 +7,7 @@ Project URL: http://gregrecflix.herokuapp.com
 This project was based around a movie recommendation website idea. It uses a cosine similarity machine learning algorithm to suggest movies to users based on the genre of their selection. To keep the package lighter and minimize the information required to host the site, the flask app makes multiple calls to different tmdb api endpoints to get the box title images, movie poster images, trailer url, and movie descriptions (they weren't all available from one endpoint). The movie names, Tmdb ID, poster path, and IMDB ID are stored in a MySQL database. 
 
 Example of API call:
-```
+```python
 url = []
 tmdb = requests.get(f'https://api.themoviedb.org/3/movie/{j}?api_key={api_key}')
 data = tmdb.json()
@@ -19,7 +19,7 @@ data = tmdb.json()
 To add additional useful functionality, I have implemented a search bar with an autocomplete feature to assist in movie selections. To expand on this, I have implemented 'fuzzy search' functionality to deliver close matches to search terms entered by the user and return them as suggestions on a search results page, while preventing crashes as a result of non-exact or misspelled titles.
 
 Example of search code:
-```
+```python
 form = SearchForm(request.form)
 if request.method == 'POST':
    form_cont = form.autocomp.data
