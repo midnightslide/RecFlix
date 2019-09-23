@@ -165,11 +165,6 @@ def movie_bot_final(title):
         url1.append("http://image.tmdb.org/t/p/w185" + str(poster))
     return render_template('recs.html', moviename=moviename, url1=url1, movieTitle=movieTitle, titleurl=titleurl, bgurl=bgurl, form=form, description=description, runtime=runtime, trailer_url=trailer_url)
 
-# test route for no video
-@app.route("/notrailer")
-def show_sorted_info():
-  return render_template("notrailer.html")
-
 # SETS UP THE FORM WITH THE AUTOCOMP TEXT FIELD AND SUBMISSION BUTTON
 class SearchForm(Form):
     autocomp = TextField('Enter Movie Title', id='movie_autocomplete')
