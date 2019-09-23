@@ -59,16 +59,21 @@
 						<div class='col-md-4'><div class="item" style="float: right;"><img class='hoverborder border' style='width: 225px; height: 338px; margin: 0px; float: left;' src='{{ titleurl }}'></div></div>
 						<div class="col-md-6">
 							<div class='overview' style="text-align: left;">
-							<h4>{{ title }}</h4>
+							<h4>{{ movieTitle }}</h4>
 							<p>{{ description }}</p>
 							<h6 style="color: #fff;">Runtime: <span style="color: #c0c0c0 !important;">{{ runtime }} minutes</span></h6>
+							{% if trailer_url == 'None' %}
+							No Trailer Available
+							{% else  %}
 							<a href="{{ trailer_url }}" data-lity><button class="button-styled" >Watch Trailer</button></a>
+							{% endif %}
+							
 						</div>
 							</div>
 					</div>
 				</div>
 				<div class="jumbotron" style="text-align: center; background: #010101; padding-top: 10px !important;">
-					<div class="row"><h4 style="margin: 0;">Based on your selection of {{ title }}, here are some movies that you might find interesting:</h3></div>
+					<div class="row"><h4 style="margin: 0;">Based on your selection of {{ movieTitle }}, here are some movies that you might find interesting:</h3></div>
 					<div class="row col-centered" style="text-align: center; margin-left: 10px;">
 						<!-- MOVIE SUGGESTIONS -->
 						<div class='col-md-2'><div class="item"><a href='{{moviename[0]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[0]}}'></a></div></div>                    

@@ -31,9 +31,11 @@ def index():
         # GET THE STRING WITH THE HIGHEST MATCHING PERCENTAGE
         highest = process.extractOne(str2Match,strOptions)
         fuzzyresult = highest[0]
+        movie_index = movies.loc[movies['title'] == fuzzyresult]
+        movieID = str(movie_index['tmdbId'].iloc[0])
         # IF THE STRING IS AN EXACT MATCH, THERE IS NO NEED TO GO TO THE SEARCH PAGE. 
         if form_cont == fuzzyresult:
-            return redirect('../rec/' + fuzzyresult)
+            return redirect('../rec/' + movieID)
         else:
             return redirect('../results/' + form_cont)
     # CREATE A DATAFRAME WITH 8 RANDOM MOVIES FROM OUR DATABASE
@@ -41,7 +43,7 @@ def index():
     title2 = []
     url = []
     y = 0
-    for x in rando_df.title:
+    for x in rando_df.tmdbId:
         title2.append(x)
     while y < 6:
         j = rando_df.tmdbId.iloc[y]
@@ -65,8 +67,11 @@ def searchResults(title):
         Ratios = process.extract(str2Match,strOptions)
         highest = process.extractOne(str2Match,strOptions)
         fuzzyresult = highest[0]
+        movie_index = movies.loc[movies['title'] == fuzzyresult]
+        movieID = str(movie_index['tmdbId'].iloc[0])
+        # IF THE STRING IS AN EXACT MATCH, THERE IS NO NEED TO GO TO THE SEARCH PAGE. 
         if form_cont == fuzzyresult:
-            return redirect('../rec/' + fuzzyresult)
+            return redirect('../rec/' + movieID)
         else:
             return redirect('../results/' + form_cont)
     resultString = title
@@ -78,48 +83,48 @@ def searchResults(title):
     for x in range(len(Ratios)):
         resultList.append(Ratios[x][0])
         matchPer.append(Ratios[x][1])
-    movieURL = []
     # CREATE A LIST OF LINKS FOR OUR RESULTS
-    for x in resultList:
-        movieURL.append("http://gregrecflix.herokuapp.com/rec/" + x)
+    movieID = []
+    movieURL = []
     resultPosters = []
     resultDescription = []
     for x in resultList:
-        # IDENTIFY THE TITLE THAT WAS PASSED IN
-        titleloc = movies.loc[movies['title'] == x]
-        # GET THE DESCRIPTION OF THE MOVIE THAT WAS PASSED IN
-        desc_index = titleloc['tmdbId'].iloc[0]
-        resultPosters.append("https://image.tmdb.org/t/p/original/" + titleloc['poster_path'].iloc[0])
-        tmdb_desc = requests.get(f'https://api.themoviedb.org/3/movie/{desc_index}?api_key={api_key}')
+        findFilm = movies.loc[movies['title'] == x]
+        grabID = str(findFilm['tmdbId'].iloc[0])
+        movieURL.append("../rec/" + grabID)
+        # GET THE DESCRIPTIONS AND POSTERS FOR THE MOVIE RESULTS
+        resultPosters.append("https://image.tmdb.org/t/p/original/" + findFilm['poster_path'].iloc[0])
+        tmdb_desc = requests.get(f'https://api.themoviedb.org/3/movie/{grabID}?api_key={api_key}')
         desc_data = tmdb_desc.json()
         if desc_data.get("overview") != None:
             resultDescription.append(desc_data['overview'])
         else:
             pass   
-    return render_template('results.html', title=title, resultString=resultString, resultList=resultList, resultPosters=resultPosters, resultDescription=resultDescription, form=form)
+    return render_template('results.html', title=title, resultString=resultString, resultList=resultList, movieURL=movieURL, matchPer=matchPer, resultPosters=resultPosters, resultDescription=resultDescription, form=form)
 
 
 @app.route("/rec/<title>", methods=['GET', 'POST'])
 def movie_bot_final(title):
     form = SearchForm(request.form)
     # IDENTIFY THE TITLE THAT WAS PASSED IN
-    titleloc = movies.loc[movies['title'] == title]
+    titleloc = movies.loc[movies['tmdbId'] == int(title)]
+    movieTitle = titleloc['title'].iloc[0]
     # GET THE DESCRIPTION OF THE MOVIE THAT WAS PASSED IN
-    desc_index = titleloc['tmdbId'].iloc[0]
-    tmdb_desc = requests.get(f'https://api.themoviedb.org/3/movie/{desc_index}?api_key={api_key}')
+    tmdb_desc = requests.get(f'https://api.themoviedb.org/3/movie/{title}?api_key={api_key}')
     desc_data = tmdb_desc.json()
     if desc_data.get("overview") != None:
         description = desc_data['overview']
     else:
         pass
     # GET THE YOUTUBE TRAILER LINK FOR THE ID THAT WAS PASSED IN
-    tmdb_trailer = requests.get(f'https://api.themoviedb.org/3/movie/{desc_index}/videos?api_key={api_key}')
-    trailer_data = tmdb_trailer.json()['results'][0]
-    if trailer_data.get('key') != None:
-        trailer_path = trailer_data['key']
-        trailer_url = ("https://www.youtube.com/watch?v=" + trailer_path)
+    tmdb_trailer = requests.get(f'https://api.themoviedb.org/3/movie/{title}/videos?api_key={api_key}')
+    trailer_response = tmdb_trailer.json()['results']
+    if not trailer_response:
+        trailer_url = 'None'
     else:
-        pass
+        trailer_data = trailer_response[0].get('key')
+        trailer_path = trailer_data
+        trailer_url = (f'https://www.youtube.com/watch?v={trailer_path}')
     # FORM SUBMISSION
     if request.method == 'POST':
         form_cont = form.autocomp.data
@@ -128,14 +133,17 @@ def movie_bot_final(title):
         Ratios = process.extract(str2Match,strOptions)
         highest = process.extractOne(str2Match,strOptions)
         fuzzyresult = highest[0]
+        movie_index = movies.loc[movies['title'] == fuzzyresult]
+        movieID = str(movie_index['tmdbId'].iloc[0])
+        # IF THE STRING IS AN EXACT MATCH, THERE IS NO NEED TO GO TO THE SEARCH PAGE. 
         if form_cont == fuzzyresult:
-            return redirect('../rec/' + fuzzyresult)
+            return redirect('../rec/' + movieID)
         else:
             return redirect('../results/' + form_cont)
     # ML BASED ON THE MOVIE GENRE
     titles = movies['title']
     indices = pd.Series(movies.index, index=movies['title'])
-    idx = indices[title]
+    idx = indices[movieTitle]
     sim_scores = list(enumerate(cosine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:21]
@@ -151,11 +159,16 @@ def movie_bot_final(title):
     titleurl = ("https://image.tmdb.org/t/p/original/" + titleloc['poster_path'].iloc[0])
     bgurl = ("https://image.tmdb.org/t/p/original/" + desc_data['backdrop_path'])
     runtime = str(desc_data['runtime'])
-    for film in temp_df.title:
+    for film in temp_df.tmdbId:
         moviename.append(film)
     for poster in temp_df.poster_path:
         url1.append("http://image.tmdb.org/t/p/w185" + str(poster))
-    return render_template('recs.html', moviename=moviename, url1=url1, title=title, titleurl=titleurl, bgurl=bgurl, form=form, description=description, runtime=runtime, trailer_url=trailer_url)
+    return render_template('recs.html', moviename=moviename, url1=url1, movieTitle=movieTitle, titleurl=titleurl, bgurl=bgurl, form=form, description=description, runtime=runtime, trailer_url=trailer_url)
+
+# test route for no video
+@app.route("/notrailer")
+def show_sorted_info():
+  return render_template("notrailer.html")
 
 # SETS UP THE FORM WITH THE AUTOCOMP TEXT FIELD AND SUBMISSION BUTTON
 class SearchForm(Form):
