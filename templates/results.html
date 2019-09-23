@@ -64,7 +64,7 @@
 					</div>
 					<div class="row resultbox alternateRow">
 						<div class="col-md-4">
-							<div class="item bottomButton"><a href='../rec/{{resultList[0]}}'><img class='hoverborder' style='width: 180px; height: 270px; float: left; border: 1px solid black;' src='{{resultPosters[0]}}'></a></div>
+							<div class="item bottomButton"><a href='{{movieURL[0]}}'><img class='hoverborder' style='width: 180px; height: 270px; float: left; border: 1px solid black;' src='{{resultPosters[0]}}'></a></div>
 						</div>
 						<div class="col-md-8">
 							<blockquote class="blockquote">
@@ -75,7 +75,8 @@
 									{{resultDescription[0]}}
 								</footer>
 							</blockquote>
-							<a href="../rec/{{resultList[0]}}"><button class="button-styled">Select</button></a>	
+							<p>Match Percentage: {{matchPer[0]}}</p>
+							<a href="{{movieURL[0]}}"><button class="button-styled">Select</button></a>	
 						</div>
 					</div>
 					<div class="row" style="margin: 20px 0 20px 0 !important;">					
@@ -83,7 +84,7 @@
 					</div>
 					<div class="row resultbox alternateRow">
 						<div class="col-md-4">
-							<div class="item bottomButton"><a href='../rec/{{resultList[1]}}'><img class='hoverborder' style='width: 180px; height: 270px; float: left; border: 1px solid black;' src='{{resultPosters[1]}}'></a></div>
+							<div class="item bottomButton"><a href="{{movieURL[1]}}"><img class='hoverborder' style='width: 180px; height: 270px; float: left; border: 1px solid black;' src='{{resultPosters[1]}}'></a></div>
 						</div>
 						<div class="col-md-8">
 							<blockquote class="blockquote">
@@ -94,12 +95,13 @@
 									{{resultDescription[1]}}
 								</footer>
 							</blockquote> 
-							<a href="../rec/{{resultList[1]}}"><button class="button-styled">Select</button></a>						
+							<p>Match Percentage: {{matchPer[1]}}</p>
+							<a href="{{movieURL[1]}}"><button class="button-styled">Select</button></a>						
 						</div>
 					</div>
 					<div class="row resultbox alternateRow">
 						<div class="col-md-4">
-							<div class="item bottomButton"><a href='../rec/{{resultList[2]}}'><img class='hoverborder' style='width: 180px; height: 270px; float: left; border: 1px solid black;' src='{{resultPosters[2]}}'></a></div>
+							<div class="item bottomButton"><a href="{{movieURL[2]}}"><img class='hoverborder' style='width: 180px; height: 270px; float: left; border: 1px solid black;' src='{{resultPosters[2]}}'></a></div>
 						</div>
 						<div class="col-md-8">
 							<blockquote class="blockquote">
@@ -110,12 +112,13 @@
 									{{resultDescription[2]}}
 								</footer>
 							</blockquote> 
-								<a href="../rec/{{resultList[2]}}"><button class="button-styled">Select</button></a>						
+							<p>Match Percentage: {{matchPer[2]}}</p>
+								<a href="{{movieURL[2]}}"><button class="button-styled">Select</button></a>						
 						</div>
 					</div>
 					<div class="row resultbox alternateRow">
 						<div class="col-md-4">
-							<div class="item bottomButton"><a href='../rec/{{resultList[3]}}'><img class='hoverborder' style='width: 180px; height: 270px; float: left; border: 1px solid black;' src='{{resultPosters[3]}}'></a></div>
+							<div class="item bottomButton"><a href='{{movieURL[3]}}'><img class='hoverborder' style='width: 180px; height: 270px; float: left; border: 1px solid black;' src='{{resultPosters[3]}}'></a></div>
 						</div>
 						<div class="col-md-8">
 							<blockquote class="blockquote">
@@ -125,9 +128,10 @@
 								<footer class="blockquote-footer">
 									{{resultDescription[3]}}
 								</footer>
+								
 							</blockquote> 
-							
-								<a href="../rec/{{resultList[3]}}"><button class="button-styled">Select</button></a>
+							<p>Match Percentage: {{matchPer[3]}}</p>
+								<a href="{{movieURL[3]}}"><button class="button-styled">Select</button></a>
 							
 						</div>
 					</div>

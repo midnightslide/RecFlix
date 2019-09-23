@@ -10,7 +10,7 @@ from api_key import api_key
 app = Flask(__name__)
 app.static_folder = 'static'
 
-# CREATE A SECRET KEY BECAUSE THE STUPID FORM REQUIRES IT FOR VALIDATION
+# CREATE A GENERIC SECRET KEY BECAUSE THE FORM REQUIRES IT FOR VALIDATION AND WE WON'T BE NEEDING ANYTHING SECURE FOR OUR PURPOSES
 app.config.update(dict(
     SECRET_KEY="powerful secretkey",
     WTF_CSRF_SECRET_KEY="a csrf secret key"
@@ -28,13 +28,15 @@ def index():
         form_cont = form.autocomp.data
         str2Match = form_cont
         strOptions = movie_list
-        # You can also select the string with the highest matching percentage
+        # GET THE STRING WITH THE HIGHEST MATCHING PERCENTAGE
         highest = process.extractOne(str2Match,strOptions)
         fuzzyresult = highest[0]
+        # IF THE STRING IS AN EXACT MATCH, THERE IS NO NEED TO GO TO THE SEARCH PAGE. 
         if form_cont == fuzzyresult:
             return redirect('../rec/' + fuzzyresult)
         else:
             return redirect('../results/' + form_cont)
+    # CREATE A DATAFRAME WITH 8 RANDOM MOVIES FROM OUR DATABASE
     rando_df = movies.sample(8)
     title2 = []
     url = []
@@ -61,7 +63,6 @@ def searchResults(title):
         str2Match = form_cont
         strOptions = movie_list
         Ratios = process.extract(str2Match,strOptions)
-        # You can also select the string with the highest matching percentage
         highest = process.extractOne(str2Match,strOptions)
         fuzzyresult = highest[0]
         if form_cont == fuzzyresult:
@@ -72,8 +73,15 @@ def searchResults(title):
     resultOptions = movie_list
     Ratios = process.extract(resultString,resultOptions)
     resultList = []
+    matchPer = []
+    # EXTRACT THE MOVIE TITLES AND MATCH ACCURACY FROM OUR FUZZY SEARCH RESULTS
     for x in range(len(Ratios)):
         resultList.append(Ratios[x][0])
+        matchPer.append(Ratios[x][1])
+    movieURL = []
+    # CREATE A LIST OF LINKS FOR OUR RESULTS
+    for x in resultList:
+        movieURL.append("http://gregrecflix.herokuapp.com/rec/" + x)
     resultPosters = []
     resultDescription = []
     for x in resultList:
@@ -104,7 +112,7 @@ def movie_bot_final(title):
         description = desc_data['overview']
     else:
         pass
-    # GET THE YOUTUBE TRAILER LINK FOR THE IMAGE THAT WAS PASSED IN
+    # GET THE YOUTUBE TRAILER LINK FOR THE ID THAT WAS PASSED IN
     tmdb_trailer = requests.get(f'https://api.themoviedb.org/3/movie/{desc_index}/videos?api_key={api_key}')
     trailer_data = tmdb_trailer.json()['results'][0]
     if trailer_data.get('key') != None:
@@ -118,7 +126,6 @@ def movie_bot_final(title):
         str2Match = form_cont
         strOptions = movie_list
         Ratios = process.extract(str2Match,strOptions)
-        # You can also select the string with the highest matching percentage
         highest = process.extractOne(str2Match,strOptions)
         fuzzyresult = highest[0]
         if form_cont == fuzzyresult:
