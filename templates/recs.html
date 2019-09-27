@@ -61,6 +61,7 @@
 							<div class='overview' style="text-align: left;">
 							<h4>{{ movieTitle }}</h4>
 							<p>{{ description }}</p>
+							<h6 style="color: #fff;">Top Billed Cast: <span style="color: #c0c0c0 !important;">{{ topCast[0] }}, {{ topCast[1] }}, {{ topCast[2] }}</span></h6>
 							<h6 style="color: #fff;">Runtime: <span style="color: #c0c0c0 !important;">{{ runtime }} minutes</span></h6>
 							{% if trailer_url == 'None' %}
 							No Trailer Available
@@ -73,7 +74,7 @@
 					</div>
 				</div>
 				<div class="jumbotron" style="text-align: center; background: #010101; padding-top: 10px !important;">
-					<div class="row"><h4 style="margin: 0;">Based on your selection of {{ movieTitle }}, here are some movies that you might find interesting:</h3></div>
+					<div class="row"><h4 style="margin: 0;">Based on the genre of your selection, here are some movies that you might find interesting:</h3></div>
 					<div class="row col-centered" style="text-align: center; margin-left: 10px;">
 						<!-- MOVIE SUGGESTIONS -->
 						<div class='col-md-2'><div class="item"><a href='{{moviename[0]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[0]}}'></a></div></div>                    
@@ -89,6 +90,38 @@
 						<div class='col-md-2'><div class="item"><a href='{{moviename[10]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[10]}}'></a></div></div>                    
 						<div class='col-md-2'><div class="item"><a href='{{moviename[11]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[11]}}'></a></div></div>			
 					</div>
+					<div class="row"><h4 style="margin: 0;">Based on the cast of your selection, here are some movies that you might find interesting:</h3></div>
+						<div class="row col-centered" style="text-align: center; margin-left: 10px;">
+							<!-- MOVIE SUGGESTIONS -->
+							<div class='col-md-2'><div class="item"><a href='{{moviename[12]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[12]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[13]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[13]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[14]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[14]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[15]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[15]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[16]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[16]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[17]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[17]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[18]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[18]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[19]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[19]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[20]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[20]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[21]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[21]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[22]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[22]}}'></a></div></div>                    
+							<div class='col-md-2'><div class="item"><a href='{{moviename[23]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[23]}}'></a></div></div>			
+						</div>
+						<div class="row"><h4 style="margin: 0;">Based on the plot of your selection, here are some movies that you might find interesting:</h3></div>
+							<div class="row col-centered" style="text-align: center; margin-left: 10px;">
+								<!-- MOVIE SUGGESTIONS -->
+								<div class='col-md-2'><div class="item"><a href='{{moviename[24]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[24]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[25]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[25]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[26]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[26]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[27]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[27]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[28]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[28]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[29]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 20px 0 0 0; float: left; border: 1px solid black;' src='{{url1[29]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[30]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[30]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[31]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[31]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[32]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[32]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[33]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[33]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[34]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[34]}}'></a></div></div>                    
+								<div class='col-md-2'><div class="item"><a href='{{moviename[35]}}'><img class='hoverborder' style='width: 180px; height: 270px; margin: 0 0 0 0; float: left; border: 1px solid black;' src='{{url1[35]}}'></a></div></div>			
+							</div>
 					<a href="../"><button class="button-styled" >Go Back</button></a>
 					<div class="row bottomButton" style="padding: 25px 0 0 0;">
 							<a href="https://github.com/GregLeland/">A Data Science and Machine Learning project created by Greg Leland for educational purposes.</a>

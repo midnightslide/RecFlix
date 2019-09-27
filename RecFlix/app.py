@@ -33,11 +33,13 @@ def index():
         fuzzyresult = highest[0]
         movie_index = movies.loc[movies['title'] == fuzzyresult]
         movieID = str(movie_index['tmdbId'].iloc[0])
-        # IF THE STRING IS AN EXACT MATCH, THERE IS NO NEED TO GO TO THE SEARCH PAGE. 
+        # IF THE STRING IS AN EXACT MATCH, THERE IS NO NEED TO GO TO THE SEARCH PAGE. IF INPUT IS NOT GREATER THAN 1, DO NOTHING. 
         if form_cont == fuzzyresult:
             return redirect('../rec/' + movieID)
-        else:
+        elif len(form_cont) > 1:
             return redirect('../results/' + form_cont)
+        else:
+            pass
     # CREATE A DATAFRAME WITH 8 RANDOM MOVIES FROM OUR DATABASE
     rando_df = movies.sample(8)
     title2 = []
@@ -69,11 +71,13 @@ def searchResults(title):
         fuzzyresult = highest[0]
         movie_index = movies.loc[movies['title'] == fuzzyresult]
         movieID = str(movie_index['tmdbId'].iloc[0])
-        # IF THE STRING IS AN EXACT MATCH, THERE IS NO NEED TO GO TO THE SEARCH PAGE. 
+        # IF THE STRING IS AN EXACT MATCH, THERE IS NO NEED TO GO TO THE SEARCH PAGE. IF INPUT IS NOT GREATER THAN 1, DO NOTHING. 
         if form_cont == fuzzyresult:
             return redirect('../rec/' + movieID)
-        else:
+        elif len(form_cont) > 1:
             return redirect('../results/' + form_cont)
+        else:
+            pass
     resultString = title
     resultOptions = movie_list
     Ratios = process.extract(resultString,resultOptions)
@@ -135,35 +139,77 @@ def movie_bot_final(title):
         fuzzyresult = highest[0]
         movie_index = movies.loc[movies['title'] == fuzzyresult]
         movieID = str(movie_index['tmdbId'].iloc[0])
-        # IF THE STRING IS AN EXACT MATCH, THERE IS NO NEED TO GO TO THE SEARCH PAGE. 
+        # IF THE STRING IS AN EXACT MATCH, THERE IS NO NEED TO GO TO THE SEARCH PAGE. IF INPUT IS NOT GREATER THAN 1, DO NOTHING. 
         if form_cont == fuzzyresult:
             return redirect('../rec/' + movieID)
-        else:
+        elif len(form_cont) > 1:
             return redirect('../results/' + form_cont)
-    # ML BASED ON THE MOVIE GENRE
+        else:
+            pass
     titles = movies['title']
     indices = pd.Series(movies.index, index=movies['title'])
     idx = indices[movieTitle]
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:21]
-    movie_indices = [i[0] for i in sim_scores]
-    # TAKES THE 12 MOST SIMILAR MOVIES TO THE TITLE MOVIE INPUT
-    mv = titles.iloc[movie_indices].head(12).to_frame()
+    # -----------------------------
+    # ML BASED ON THE MOVIE GENRE
+    # -----------------------------
+    genre_sim_scores = list(enumerate(genre_cosine_sim[idx]))
+    genre_sim_scores = sorted(genre_sim_scores, key=lambda x: x[1], reverse=True)
+    genre_sim_scores = genre_sim_scores[1:21]
+    genre_movie_indices = [i[0] for i in genre_sim_scores]
+    # RETURNS THE 12 MOST SIMILAR MOVIES BY GENRE
+    genre_df = titles.iloc[genre_movie_indices].head(13).to_frame()
+    # ----------------------------
+    # ML BASED ON THE MOVIE CAST
+    # ----------------------------
+    cast_sim_scores = list(enumerate(cast_cosine_sim[idx]))
+    cast_sim_scores = sorted(cast_sim_scores, key=lambda x: x[1], reverse=True)
+    cast_sim_scores = cast_sim_scores[1:21]
+    cast_movie_indices = [i[0] for i in cast_sim_scores]
+    # RETURNS THE 12 MOST SIMILAR MOVIES BY CAST
+    cast_df = titles.iloc[cast_movie_indices].head(13).to_frame()
+    # -----------------------------------
+    # ML BASED ON THE MOVIE DESCRIPTION
+    # -----------------------------------
+    desc_sim_scores = list(enumerate(desc_cosine_sim[idx]))
+    desc_sim_scores = sorted(desc_sim_scores, key=lambda x: x[1], reverse=True)
+    desc_sim_scores = desc_sim_scores[1:21]
+    desc_movie_indices = [i[0] for i in desc_sim_scores]
+    # RETURNS THE 12 MOST SIMILAR MOVIES BY DESCRIPTION
+    desc_df = titles.iloc[desc_movie_indices].head(13).to_frame()
+    # ------------------------------------------------------------------
+    # REMOVING SEARCH TITLE FROM RESULTS AND RETURNING 12 RECS
+    # ------------------------------------------------------------------
+    genre_df = genre_df[genre_df.title != movieTitle]
+    genre_df = genre_df.head(12)
+    cast_df = cast_df[cast_df.title != movieTitle]
+    cast_df = cast_df.head(12)
+    desc_df = desc_df[desc_df.title != movieTitle]
+    desc_df = desc_df.head(12)
+    # ------------------------------------------------------------------
+    # PROSESSING RESULTS AND CREATING ONE LARGE DATAFRAME
+    # ------------------------------------------------------------------
+    mv = pd.concat([genre_df,cast_df,desc_df]).reset_index(drop=True)
     cols = ['title']
     temp_df = mv.join(movies.set_index(cols), on=cols)
+    # GETTING MOVIE INFORMATION
     moviename = []
     url1 = []
+    movCastin = titleloc['cast'].iloc[0]
+    movCastOut = movCastin.replace("'","").strip("][").split(', ')
+    topCast = []
+    for x in range(3):
+        topCast.append(movCastOut[x])
     # PULLS THE IMAGE URL FROM THE MOVIES DF AND APPENDS THEM TO THE URL PREFIX FOR THE MOVIE POSTERS
     # PASSES THE MOVIE POSTER URL INTO THE RECS.HTML PAGE
-    titleurl = ("https://image.tmdb.org/t/p/original/" + titleloc['poster_path'].iloc[0])
-    bgurl = ("https://image.tmdb.org/t/p/original/" + desc_data['backdrop_path'])
+    titleurl = str("https://image.tmdb.org/t/p/original/" + titleloc['poster_path'].iloc[0])
+    backdropPath = str(desc_data['backdrop_path'])
+    bgurl = ("https://image.tmdb.org/t/p/original/" + backdropPath)
     runtime = str(desc_data['runtime'])
     for film in temp_df.tmdbId:
         moviename.append(film)
     for poster in temp_df.poster_path:
         url1.append("http://image.tmdb.org/t/p/w185" + str(poster))
-    return render_template('recs.html', moviename=moviename, url1=url1, movieTitle=movieTitle, titleurl=titleurl, bgurl=bgurl, form=form, description=description, runtime=runtime, trailer_url=trailer_url)
+    return render_template('recs.html', moviename=moviename, url1=url1, topCast=topCast, movieTitle=movieTitle, titleurl=titleurl, bgurl=bgurl, form=form, description=description, runtime=runtime, trailer_url=trailer_url)
 
 # SETS UP THE FORM WITH THE AUTOCOMP TEXT FIELD AND SUBMISSION BUTTON
 class SearchForm(Form):
