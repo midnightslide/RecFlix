@@ -64,7 +64,6 @@ else:
 
 ![Image of RecFlix Search](https://i.imgur.com/Ykah7qM.jpg)
 
-
 The ‘RECFLIX’ project utilizes the following languages/libraries:
 <ul>
   <li>Python</li>
@@ -81,13 +80,15 @@ The ‘RECFLIX’ project utilizes the following languages/libraries:
 
 Recent Additions:
 
-Major Update:
+Major Updates:
 <ul>
-  <li>Modified the database to include movie descriptions and top billed cast.</li>
-  <li>In addition to the genre suggestions, the /rec/ page now gives suggestions based on the similarity of the cast and plot of the film.</li>
-  <li>Added top billed cast to the movie information on /rec/ page.</li>
-  <li>Created a primitive search engine within the site that displays close matches to the user's search entry.</li>
+  <li>9-26-19 - Modified the database to include movie descriptions and top billed cast.</li>
+  <li>9-26-19 - In addition to the genre suggestions, the /rec/ page now gives suggestions based on the similarity of the cast and plot of the film.</li>
+  <li>9-26-19 - Added top billed cast to the movie information on /rec/ page.</li>
+  <li>9-19-19 - Created a primitive search engine within the site that displays close matches to the user's search entry.</li>
 </ul>
+
+![Image of RecFlix Search Results](https://i.imgur.com/Wh7WT8L.jpg)
 
 Minor Udpates / Bug Fixes:
 <ul>
