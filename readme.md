@@ -1,6 +1,6 @@
 <center> <h1>"RecFlix" - A Movie Recommendation System</h1> </center>
 
-Project URL: http://gregrecflix.herokuapp.com
+This project was created as a proof of concept and is unreleased. 
 
 ![Image of RecFlix](https://i.imgur.com/UgAF0em.jpg)
 
